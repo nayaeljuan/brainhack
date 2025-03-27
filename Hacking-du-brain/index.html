@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transition Animée</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: black;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-size: 50px;
+            cursor: pointer;
+            color: white;
+            background-color: red;
+        }
+
+        .barre {
+            position: absolute;
+            bottom: -100px;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            background-color: red;
+            animation: slideUp 10s linear forwards;
+            display: none;
+        }
+
+        @keyframes slideUp {
+            from {
+                bottom: -100px;
+            }
+            to {
+                bottom: 100vh;
+            }
+        }
+        #clignotant {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 30px;
+        font-weight: bold;
+        color: white;
+        display: none; /* Caché au départ */
+        animation: clignote 1s infinite alternate;
+    }
+
+@keyframes clignote {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+    </style>
+</head>
+<body>
+
+    <h1 id="titre">Clique et colle ton visage à l'ecran</h1>
+    <p id="clignotant">Ne bougez pas, scan en cours</p>
+
+    <div class="barre" id="barre"></div>
+    <audio id="audio" src="son/audio-brainscan-61126.mp3"></audio> <!-- 🔊 Ajout du son -->
+
+    <script>
+        document.getElementById("titre").addEventListener("click", function() {
+            this.style.display = "none"; // Cache le titre
+            let barre = document.getElementById("barre");
+            barre.style.display = "block"; // Affiche la barre rouge
+            let texte = document.getElementById("clignotant");
+            texte.style.display = "block"; // Affiche le texte clignotant
+
+            setTimeout(() => {
+            texte.style.display = "none"; // Cache le texte après 10s
+            }, 10000);
+
+
+            let audio = document.getElementById("audio");
+            audio.play(); // 🔊 Joue le son
+
+            // Après 10 secondes, on change de page
+            setTimeout(() => {
+                audio.pause(); // 🔇 Arrête le son
+                window.location.href = "brain-hacked.html"; // Redirection
+            }, 10000);
+        });
+    </script>
+
+</body>
+</html>
